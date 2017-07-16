@@ -28,11 +28,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef UTIL3D_MAPPING_HPP_
 #define UTIL3D_MAPPING_HPP_
 
+#include <stdio.h>
 #include <rtabmap/core/util3d_filtering.h>
 #include <rtabmap/core/util3d.h>
 #include <pcl/common/common.h>
 #include <pcl/common/centroid.h>
 #include <pcl/common/io.h>
+#include <pcl/filters/passthrough.h>
 
 namespace rtabmap{
 namespace util3d{
@@ -42,7 +44,6 @@ typename pcl::PointCloud<PointT>::Ptr projectCloudOnXYPlane(
 		const typename pcl::PointCloud<PointT> & cloud)
 {
 	typename pcl::PointCloud<PointT>::Ptr output(new pcl::PointCloud<PointT>);
-	*output = cloud;
 	for(unsigned int i=0; i<output->size(); ++i)
 	{
 		output->at(i).z = 0;
@@ -65,6 +66,9 @@ void segmentObstaclesFromGround(
 		pcl::IndicesPtr * flatObstacles,
 		const Eigen::Vector4f & viewPoint)
 {
+	// !!!!!!!
+	fprintf(stderr, "\n\n\n[rtabmap](%s %d) %s()\n\n",
+		__FILE__, __LINE__, __func__);
 	ground.reset(new std::vector<int>);
 	obstacles.reset(new std::vector<int>);
 	if(flatObstacles)
@@ -189,6 +193,8 @@ void segmentObstaclesFromGround(
 		pcl::IndicesPtr * flatObstacles,
 		const Eigen::Vector4f & viewPoint)
 {
+	fprintf(stderr, "\n\n\n[rtabmap](%s %d) %s()\n\n",
+		__FILE__, __LINE__, __func__);
 	pcl::IndicesPtr indices(new std::vector<int>);
 	segmentObstaclesFromGround<PointT>(
 			cloud,
@@ -214,6 +220,8 @@ void occupancy2DFromGroundObstacles(
 		cv::Mat & obstacles,
 		float cellSize)
 {
+	fprintf(stderr, "\n\n\n[rtabmap](%s %d) %s()\n\n",
+		__FILE__, __LINE__, __func__);
 	typename pcl::PointCloud<PointT>::Ptr groundCloud(new pcl::PointCloud<PointT>);
 	typename pcl::PointCloud<PointT>::Ptr obstaclesCloud(new pcl::PointCloud<PointT>);
 
@@ -243,6 +251,8 @@ void occupancy2DFromGroundObstacles(
 		cv::Mat & obstacles,
 		float cellSize)
 {
+	fprintf(stderr, "\n\n\n[rtabmap](%s %d) %s()\n\n",
+		__FILE__, __LINE__, __func__);
 	ground = cv::Mat();
 	if(groundCloud->size())
 	{
@@ -292,6 +302,8 @@ void occupancy2DFromCloud3D(
 		bool segmentFlatObstacles,
 		float maxGroundHeight)
 {
+	fprintf(stderr, "\n\n\n[rtabmap](%s %d) %s()\n\n",
+		__FILE__, __LINE__, __func__);
 	if(cloud->size() == 0)
 	{
 		return;
@@ -330,6 +342,8 @@ void occupancy2DFromCloud3D(
 		bool segmentFlatObstacles,
 		float maxGroundHeight)
 {
+	fprintf(stderr, "\n\n\n[rtabmap](%s %d) %s()\n\n",
+		__FILE__, __LINE__, __func__);
 	pcl::IndicesPtr indices(new std::vector<int>);
 	occupancy2DFromCloud3D<PointT>(cloud, indices, ground, obstacles, cellSize, groundNormalAngle, minClusterSize, segmentFlatObstacles, maxGroundHeight);
 }

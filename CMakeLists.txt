@@ -161,7 +161,7 @@ option(PCL_OMP            "With PCL OMP implementations"         ON)
 FIND_PACKAGE(OpenCV REQUIRED QUIET)
 FIND_PACKAGE(PCL 1.7 REQUIRED QUIET)
 FIND_PACKAGE(ZLIB REQUIRED QUIET)
-
+MESSAGE(STATUS "OPENCV DIR IS ${OpenCV_DIR}")
 # fix libproj.so not found on Xenial
 if(NOT "${PCL_LIBRARIES}" STREQUAL "")
    list(REMOVE_ITEM PCL_LIBRARIES "vtkproj4")

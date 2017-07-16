@@ -48,6 +48,20 @@ typename pcl::PointCloud<PointT>::Ptr OccupancyGrid::segmentCloud(
 
 	// voxelize to grid cell size
 	cloud = util3d::voxelize(cloudIn, indicesIn, cellSize_);
+	/** @note cloud should in robot base / camera coord axis!! */
+#	warning "yuiwong debug"
+	fprintf(stderr, "\n\n\n[rtabmap](%s %d) %s()\n\n",
+		__FILE__, __LINE__, __func__);
+	fprintf(stderr, "\n\n\n[rtabmap](%s %d) before passZ size %zu\n",
+		__FILE__, __LINE__, cloud->size());
+	pcl::PassThrough<PointT> passZ;
+	passZ.setFilterFieldName("z");
+	//passZ.setFilterLimits(-1.2, 1.2);
+	passZ.setFilterLimits(-1.2, 0.7);
+	passZ.setInputCloud(cloud->makeShared());
+	passZ.filter(*cloud);
+	fprintf(stderr, "[rtabmap](%s %d) after passZ size %zu\n\n\n",
+		__FILE__, __LINE__, cloud->size());
 	pcl::IndicesPtr indices(new std::vector<int>);
 	indices->resize(cloud->size());
 	for(unsigned int i=0; i<indices->size(); ++i)
