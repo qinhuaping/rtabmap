@@ -992,7 +992,11 @@ pcl::PointCloud<pcl::PointXYZRGB>::Ptr RTABMAP_EXP cloudRGBFromSensorData(
 
 	pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZRGB>);
 
-	if(!sensorData.imageRaw().empty() && !sensorData.depthRaw().empty() && sensorData.cameraModels().size())
+	if(sensorData.cloudRaw().size())
+	{
+		*cloud=sensorData.cloudRaw();
+	}
+	else if(!sensorData.imageRaw().empty() && !sensorData.depthRaw().empty() && sensorData.cameraModels().size())
 	{
 		//depth
 		UDEBUG("");

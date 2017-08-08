@@ -539,7 +539,7 @@ class RTABMAP_EXP Parameters
     RTABMAP_PARAM(Grid, CellSize,                float,  0.05,    "Resolution of the occupancy grid.");
     RTABMAP_PARAM(Grid, MapFrameProjection,      bool,   false,   "Projection in map frame. On a 3D terrain and a fixed local camera transform (the cloud is created relative to ground), you may want to disable this to do the projection in robot frame instead.");
     RTABMAP_PARAM(Grid, NormalsSegmentation,     bool,   true,    "Segment ground from obstacles using point normals, otherwise a fast passthrough is used.");
-    RTABMAP_PARAM(Grid, MaxObstacleHeight,       float,  0.2,     "Maximum obstacles height (0=disabled).");
+    RTABMAP_PARAM(Grid, MaxObstacleHeight,       float,  0.7,     "Maximum obstacles height (0=disabled).");
     RTABMAP_PARAM(Grid, MinGroundHeight,         float,  0.0,     "Minimum ground height (0=disabled).");
     RTABMAP_PARAM(Grid, MaxGroundHeight,         float,  0.5,     uFormat("Maximum ground height (0=disabled). Should be set if \"%s\" is true.", kGridNormalsSegmentation().c_str()));
     RTABMAP_PARAM(Grid, MaxGroundAngle,          float,  30.0,      uFormat("[%s=true] Maximum angle (degrees) between point's normal to ground's normal to label it as ground. Points with higher angle difference are considered as obstacles.", kGridNormalsSegmentation().c_str()));

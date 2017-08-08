@@ -249,6 +249,18 @@ void OccupancyGrid::createLocalMap(
 					cloudDecimation_,
 					cloudMaxDepth_,
 					cloudMinDepth_);
+
+			/*if(node.sensorData()._cloudRaw.size())
+			{
+				cloud = node.sensorData()._cloudRaw;
+			}
+			else
+			{
+				UERROR("cloud is null");
+				return;
+			}
+			*/		
+			//从RGB图像和深度图中获取点云，qhp add
 			cloud = util3d::cloudRGBFromSensorData(
 					node.sensorData(),
 					cloudDecimation_,

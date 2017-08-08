@@ -31,6 +31,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "rtabmap/utilite/ULogger.h"
 #include <rtabmap/utilite/UMath.h>
 #include <rtabmap/utilite/UConversion.h>
+#include <pcl/io/pcd_io.h>
+#include <pcl/io/ply_io.h>
+#include <pcl/common/transforms.h>
+
 
 namespace rtabmap
 {
@@ -155,6 +159,49 @@ SensorData::SensorData(
 		_userDataRaw = userData;
 	}
 }
+
+//qhp add pcl constructor + laser scan
+SensorData::SensorData(
+		const cv::Mat & laserScan,
+		const LaserScanInfo & laserScanInfo,
+		const pcl::PointCloud<pcl::PointXYZRGB> & cloud,
+		int id,
+		double stamp,
+		const cv::Mat & userData) :
+		_id(id),
+		_stamp(stamp),
+	//	_cameraModels(std::vector<CameraModel>(1, cameraModel)),
+		_laserScanInfo(laserScanInfo),
+		_cellSize(0.0f)
+{
+
+	if(laserScan.type() == CV_32FC2 || laserScan.type() == CV_32FC3  || laserScan.type() == CV_32FC(4) || laserScan.type() == CV_32FC(6))
+	{
+		_laserScanRaw = laserScan;
+	}
+	else if(!laserScan.empty())
+	{
+		UASSERT(laserScan.type() == CV_8UC1); // Bytes
+		_laserScanCompressed = laserScan;
+	}
+
+	 if(userData.type() == CV_8UC1 &&  userData.rows == 1 && userData.cols > int(3*sizeof(int))) // Bytes
+	{
+		_userDataCompressed = userData; // assume compressed
+	}
+	else
+	{
+		_userDataRaw = userData;
+	}
+
+	if(cloud.size())
+	{
+		_cloudRaw=cloud;
+		
+	}
+		
+}
+
 
 // RGB-D constructor + laser scan
 SensorData::SensorData(

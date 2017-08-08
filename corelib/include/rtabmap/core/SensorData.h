@@ -36,6 +36,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <rtabmap/core/LaserScanInfo.h>
 #include <opencv2/core/core.hpp>
 #include <opencv2/features2d/features2d.hpp>
+#include <pcl/io/pcd_io.h>
+#include <pcl/io/ply_io.h>
+#include <pcl/common/transforms.h>
 
 namespace rtabmap
 {
@@ -73,6 +76,16 @@ public:
 			double stamp = 0.0,
 			const cv::Mat & userData = cv::Mat());
 
+	// PCL constructor + laser scan
+	SensorData(
+			const cv::Mat & laserScan,
+			const LaserScanInfo & laserScanInfo,
+			const pcl::PointCloud<pcl::PointXYZRGB> & cloud,
+			//const CameraModel & cameraModel,
+			int id = 0,
+			double stamp = 0.0,
+			const cv::Mat & userData = cv::Mat());
+	
 	// RGB-D constructor + laser scan
 	SensorData(
 			const cv::Mat & laserScan,
@@ -154,6 +167,7 @@ public:
 	const cv::Mat & laserScanCompressed() const {return _laserScanCompressed;}
 
 	const cv::Mat & imageRaw() const {return _imageRaw;}
+	const pcl::PointCloud<pcl::PointXYZRGB> & cloudRaw() const {return _cloudRaw;}
 	const cv::Mat & depthOrRightRaw() const {return _depthOrRightRaw;}
 	const cv::Mat & laserScanRaw() const {return _laserScanRaw;}
 	void setImageRaw(const cv::Mat & imageRaw) {_imageRaw = imageRaw;}
@@ -238,6 +252,8 @@ private:
 	cv::Mat _imageRaw;          // CV_8UC1 or CV_8UC3
 	cv::Mat _depthOrRightRaw;   // depth CV_16UC1 or CV_32FC1, right image CV_8UC1
 	cv::Mat _laserScanRaw;      // CV_32FC2 or CV_32FC3
+
+	pcl::PointCloud<pcl::PointXYZRGB>  _cloudRaw;
 
 	std::vector<CameraModel> _cameraModels;
 	StereoCameraModel _stereoCameraModel;
