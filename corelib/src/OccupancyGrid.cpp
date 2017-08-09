@@ -250,26 +250,25 @@ void OccupancyGrid::createLocalMap(
 					cloudMaxDepth_,
 					cloudMinDepth_);
 
-			/*if(node.sensorData()._cloudRaw.size())
+			if(node.sensorData().cloudRaw().size())
 			{
-				cloud = node.sensorData()._cloudRaw;
+				*cloud = node.sensorData().cloudRaw();
 			}
 			else
 			{
-				UERROR("cloud is null");
-				return;
+				
+				//从RGB图像和深度图中获取点云
+				cloud = util3d::cloudRGBFromSensorData(
+						node.sensorData(),
+						cloudDecimation_,
+						cloudMaxDepth_,
+						cloudMinDepth_,
+						indices.get(),
+						parameters_,
+						roiRatios_);
 			}
-			*/		
-			//从RGB图像和深度图中获取点云，qhp add
-			cloud = util3d::cloudRGBFromSensorData(
-					node.sensorData(),
-					cloudDecimation_,
-					cloudMaxDepth_,
-					cloudMinDepth_,
-					indices.get(),
-					parameters_,
-					roiRatios_);
-
+				
+			
 			// update viewpoint
 			if(node.sensorData().cameraModels().size())
 			{

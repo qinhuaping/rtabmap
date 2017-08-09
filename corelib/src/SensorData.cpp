@@ -165,12 +165,13 @@ SensorData::SensorData(
 		const cv::Mat & laserScan,
 		const LaserScanInfo & laserScanInfo,
 		const pcl::PointCloud<pcl::PointXYZRGB> & cloud,
+		const CameraModel & cameraModel,
 		int id,
 		double stamp,
 		const cv::Mat & userData) :
 		_id(id),
 		_stamp(stamp),
-	//	_cameraModels(std::vector<CameraModel>(1, cameraModel)),
+		_cameraModels(std::vector<CameraModel>(1, cameraModel)),
 		_laserScanInfo(laserScanInfo),
 		_cellSize(0.0f)
 {

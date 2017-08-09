@@ -81,7 +81,7 @@ public:
 			const cv::Mat & laserScan,
 			const LaserScanInfo & laserScanInfo,
 			const pcl::PointCloud<pcl::PointXYZRGB> & cloud,
-			//const CameraModel & cameraModel,
+			const CameraModel & cameraModel,
 			int id = 0,
 			double stamp = 0.0,
 			const cv::Mat & userData = cv::Mat());
